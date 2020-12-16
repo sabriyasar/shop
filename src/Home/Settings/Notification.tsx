@@ -1,8 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Switch } from "react-native";
 
-import { Box, Text } from "../../components";
+import { Box, Text, useTheme } from "../../components";
 
 interface NotificationProps {
     title: string;
@@ -11,6 +10,7 @@ interface NotificationProps {
 
 const Notification = ({ title, description }: NotificationProps) => {
     const [toggled, setToggled] = useState(false);
+    const theme = useTheme();
     return (
         <Box flexDirection="row" marginBottom="m">
             <Box flex={1} justifyContent="center">
@@ -18,7 +18,13 @@ const Notification = ({ title, description }: NotificationProps) => {
                 <Text variant="body">{description}</Text>
             </Box>
             <Box paddingVertical="m">
-                <Switch value={toggled} onValueChange={setToggled} />
+                <Switch 
+                value={toggled} 
+                onValueChange={setToggled} 
+                trackColor={{ 
+                    true: theme.colors.primary, 
+                    false: theme.colors.background2,
+                    }} />
             </Box>
         </Box>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Header } from "../../components";
+import { Box, Content, Header } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 
 import Notification from "./Notification";
@@ -7,13 +7,14 @@ import Notification from "./Notification";
 
 const Settings = ({ navigation }: HomeNavigationProps<"Settings">) => {
     return (
-        <Box flex={1} backgroundColor="background">
+      <Content>
+        <Box backgroundColor="background">
         <Header
             title="Ayarlar"
             left={{ icon: "menu", onPress: () => navigation.openDrawer() }}
             right={{ icon: "share", onPress: () => true }}
         />
-        <Box padding="m" flex={1}>
+        <Box padding="m">
         <Notification
             title="Gün Sonu"
             description="Günlük bildirimleri alın"
@@ -32,6 +33,7 @@ const Settings = ({ navigation }: HomeNavigationProps<"Settings">) => {
           />
         </Box>
         </Box>
+        </Content>
     );
 };
 
