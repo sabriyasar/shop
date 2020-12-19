@@ -28,7 +28,7 @@ const DrawerItem = ({ icon, color, label, ...props }: DrawerItemProps) => {
     const { screen, onPress } = props;
 
     const theme = useTheme();
-    const navigation = useNavigation<DrawerNavigationProp<HomeRoutes, "OutfitIdeas">>();
+    const navigation = useNavigation<DrawerNavigationProp<HomeRoutes, "MyFlow">>();
 
     return (
         <RectButton
