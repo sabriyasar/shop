@@ -10,20 +10,21 @@ import Footer from "../components/Footer";
 
 const signUpSchema = yup.object().shape({
     email: yup.string().email().trim().lowercase().required(),
-    password: yup.string().trim().min(8).required(),
+    password: yup.string().trim().min(5).required(),
     passwordConfirmation: yup.string()
-        .equals([yup.ref("password")], "Password don't match")
+        .equals([yup.ref("password")], "Şifre eşleşmedi")
         .trim()
-        .min(8)
+        .min(5)
         .required()
 });
 
 const SignUp = ({ navigation }:  AuthNavigationProps<"SignUp">) => {
 
+
     const footer = (
         <Footer
-            title="Already have an account?"
-            action="Login here"
+            title="Hesabınız var mı?"
+            action="Giriş Yap"
             onPress={() => navigation.navigate("Login")}
         />
     );
@@ -50,16 +51,17 @@ const SignUp = ({ navigation }:  AuthNavigationProps<"SignUp">) => {
 
     return (
         <Container pattern={1} {... { footer }}>
-            <Text variant="title1" textAlign="center">Create an account</Text>
+            
+            <Text variant="title1" textAlign="center">Hesap Oluştur</Text>
             <Text variant="body" textAlign="center" marginBottom="l" marginTop="l">
-               Let's us know what's your name, email, and password
+               Ad Soyad, E-Posta ve Şifrenizi giriniz.
             </Text>
 
             <Box>
                 <Box marginBottom="m">
                     <TextInputField
                         icon="mail"
-                        placeholder="Enter your Email"
+                        placeholder="E-Posta adresiniz"
                         onChangeText={handleChange('email')}
                         onBlur={handleBlur('email')}
                         value={values.email}
@@ -76,7 +78,7 @@ const SignUp = ({ navigation }:  AuthNavigationProps<"SignUp">) => {
                     <TextInputField
                         ref={password}
                         icon="lock"
-                        placeholder="Enter your Password"
+                        placeholder="Şifre giriniz"
                         secureTextEntry={true}
                         onChangeText={handleChange('password')}
                         onBlur={handleBlur('password')}
@@ -93,7 +95,7 @@ const SignUp = ({ navigation }:  AuthNavigationProps<"SignUp">) => {
                 <TextInputField
                     ref={passwordConfirmation}
                     icon="lock"
-                    placeholder="Repeat Password"
+                    placeholder="Şifre tekrar"
                     secureTextEntry={true}
                     onChangeText={handleChange('passwordConfirmation')}
                     onBlur={handleBlur('passwordConfirmation')}
@@ -108,9 +110,10 @@ const SignUp = ({ navigation }:  AuthNavigationProps<"SignUp">) => {
                 />
 
                 <Box alignItems="center" marginTop="xl">
-                    <Button variant="primary" onPress={handleSubmit} label="Create your account" />
+                    <Button variant="primary" onPress={handleSubmit} label="Hesap Oluştur" />
                 </Box>
             </Box>
+           
         </Container>
     );
 };

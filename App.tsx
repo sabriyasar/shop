@@ -8,6 +8,10 @@ import { LoadAssets } from "./src/components";
 import { HomeNavigator, assets as homeAssets } from "./src/Home";
 import {AppRoutes} from "./src/components/Navigation";
 
+import {Provider} from 'react-redux';
+import { store } from './src/redux';
+
+
 const assets = [...authenticationAssets, homeAssets];
 
 const fonts = {
@@ -21,16 +25,24 @@ const AppStack = createStackNavigator<AppRoutes>()
 
 
 export default function App () {
+
     return (
         <ThemeProvider>
+                <Provider store={store}>
+
             <LoadAssets {...{ fonts, assets }}>
                 <SafeAreaProvider>
                     <AppStack.Navigator headerMode="none">
+
                         <AppStack.Screen name="Authentication" component={AuthenticationNavigator} />
+            
                         <AppStack.Screen name="Home" component={HomeNavigator} />
                     </AppStack.Navigator>
                 </SafeAreaProvider>
             </LoadAssets>
+            
+            </Provider>
+
         </ThemeProvider>
     );
 }

@@ -1,110 +1,80 @@
-import React, {useRef} from 'react';
-import {useFormik} from "formik"
-import * as yup from "yup";
-import {TextInput} from "react-native";
-
+import React, {useState, useEffect} from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import {AuthNavigationProps} from "../../components/Navigation";
-import {Container, Button, Text, Box} from "../../components"
-import TextInputField from '../../components/Form/TextInputField';
-import CheckBoxField from "../../components/Form/CheckBoxField";
-import Footer from "../components/Footer";
-import {CommonActions} from "@react-navigation/native";
+import TextField from '../components/TextField';
+import Button from '../components/Button';
 
+import { useSelector, useDispatch } from 'react-redux';
 
-const loginSchema = yup.object().shape({
-    email: yup.string().email().trim().lowercase().required(),
-    password: yup.string().trim().min(8).required()
-});
-
+import { ApplicationState, onLogin } from '../../redux';
 
 const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
 
-    const footer = (
-        <Footer
-            title="Don't have an account?"
-            action="Sign Up here"
-            onPress={() => navigation.navigate("SignUp")}
-        />
-    );
+    const dispatch = useDispatch();
 
-    const {
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        values,
-        errors,
-        touched,
-        setFieldValue
-    } = useFormik({
-        validationSchema:loginSchema,
-        initialValues:{email: "", password: "", remember: false},
-        onSubmit: () => navigation.dispatch(CommonActions.reset({
-            index: 0,
-            routes: [
-                { name: "Home" }
-            ]
-        }))
-    });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const password = useRef<TextInput>(null)
+  const { user, error } = useSelector(
+    (state: ApplicationState) => state.userReducer
+  );
+
+  const { token } = user;
+
+
+  const onTapLogin = () => {
+    dispatch(onLogin(email, password));
+    };
 
     return (
-        <Container pattern={0} {... { footer }}>
-            <Text variant="title1" textAlign="center">Welcome back</Text>
-            <Text variant="body" textAlign="center" marginBottom="l" marginTop="l">
-                Use your credentials below and login to your account
-            </Text>
+        <View style={styles.container}>
+            <View style={styles.navigation}>
 
-            <Box>
-                <Box marginBottom="m">
-                    <TextInputField
-                        icon="mail"
-                        placeholder="Enter your Email"
-                        onChangeText={handleChange('email')}
-                        onBlur={handleBlur('email')}
-                        value={values.email}
-                        error={errors.email}
-                        touched={touched.email}
-                        autoCompleteType="email"
-                        autoCapitalize="none"
-                        returnKeyType="next"
-                        returnKeyLabel="Next"
-                        onSubmitEditing={() => password.current?.focus()}
+            </View>
+            <View style={styles.body}>
+                <View style={styles.loginView}>
+                <TextField placeholder="E-Posta" onTextChange={setEmail} />
+                <TextField 
+                    placeholder="Şifre" 
+                    onTextChange={setPassword} 
+                    isSecure={true} 
                     />
-                </Box>
-                <TextInputField
-                    ref={password}
-                    icon="lock"
-                    placeholder="Enter your Password"
-                    secureTextEntry={true}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
-                    value={values.password}
-                    error={errors.password}
-                    touched={touched.password}
-                    autoCompleteType="password"
-                    autoCapitalize="none"
-                    returnKeyType="go"
-                    returnKeyLabel="Go"
-                    onSubmitEditing={() => handleSubmit()}
-                />
+                <Button title="Login" onTap={onTapLogin}/>
 
-                <Box flexDirection="row" justifyContent="space-between" marginTop="s">
-                    <CheckBoxField
-                        label="Remember me"
-                        checked={values.remember}
-                        onChange={() => setFieldValue('remember', !values.remember)}
-                    />
-                    <Button variant="transparent" onPress={() => navigation.navigate("ForgotPassword")}>
-                        <Text color="primary">Forgot password</Text>
-                    </Button>
-                </Box>
-                <Box alignItems="center" marginTop="xl">
-                    <Button variant="primary" onPress={handleSubmit} label="Log into your account" />
-                </Box>
-            </Box>
-        </Container>
+                {token !== undefined && ( 
+                <Text style={{marginLeft: 20, marginRight: 20}}>
+                    {JSON.stringify(user)}
+                </Text>
+                )}
+
+                </View>
+            </View>
+
+            <View style={styles.footer}></View>
+
+        </View>
     );
 };
 
 export default Login;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    navigation: {
+        flex: 2,
+    },
+    body: {
+        flex: 9,
+    },
+    loginView: {
+        marginTop: 200,
+        marginLeft: 20,
+        marginRight: 20,
+        height: 400,
+    },
+    footer: {
+        flex: 1,
+    },
+});

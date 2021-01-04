@@ -45,17 +45,17 @@ const Welcome = ({ navigation }:  AuthNavigationProps<"Welcome">) => {
                     alignItems="center"
                     padding="xl"
                 >
-                    <Text variant="title2">Let's get started</Text>
-                    <Text variant="body" textAlign="center">Login to your account bellow or signup for amazing experience</Text>
+                    <Text variant="title2">Hadi Başlayalım</Text>
+                    <Text variant="body" textAlign="center">Uygulamayı keşfetmek için kayıt olun ya da giriş yapın</Text>
                     <Button
                         variant="primary"
-                        label="Have an account? Login"
+                        label="Hesabın var mı? Giriş Yap"
                         onPress={() => navigation.navigate("Login")}
                     />
-                    <Button label="Join us, it's free" onPress={() => navigation.navigate("SignUp")} />
+                    <Button label="Hemen Kayıt Ol" onPress={() => navigation.navigate("SignUp")} />
                     <Button
                         variant="transparent"
-                        label="Forgot password?"
+                        label="Şifreni mi unuttun?"
                         onPress={() => navigation.navigate("ForgotPassword")}
                     />
                 </Box>

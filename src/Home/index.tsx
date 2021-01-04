@@ -6,7 +6,6 @@ import MyFavorites from "./MyFavorites"
 import TransactionHistory from "./TransactionHistory"
 import EditProfile from "./EditProfile"
 import Settings from "./Settings"
-import MyApi from "./Api/MyApi"
 
 import { HomeRoutes } from "../components/Navigation"
 import DrawerContent, { DRAWER_WIDTH } from "./Drawer"
@@ -40,10 +39,6 @@ export const HomeNavigator = () => (
 		<AppDrawer.Screen 
 			name="Settings" 
 			component={Settings} 
-		/>
-		<AppDrawer.Screen 
-			name="MyApi" 
-			component={MyApi} 
 		/>
 	</AppDrawer.Navigator>
 )
